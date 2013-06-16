@@ -15,17 +15,17 @@ class Solucion:
         self.ciudades.extend(ciudades)
     
     def __str__(self):
-        return "Solucion(id = %s, f = %s)" % (self.id, self.fitness())
+        return 'Solucion(id = {id}, d = {d} km)'.format(id = self.id, d = self.fitness())
     
     def fitness(self):
         suma = 0
         ciudades = self.ciudades
         for ciudad_a, ciudad_b in zip(ciudades, ciudades[1:]):
-            dist = ciudad_a.distanceTo(ciudad_b)
+            dist = ciudad_a.distanceTo_gps(ciudad_b)
             suma += dist
         return suma
     
-    def getVecina(self, id_):
+    def getVecina(self, id_): # Genera una solucion 'vecina', es similar a la solucion original (Intercambia dos ciudades)
         ciudades = self.ciudades[:]
         r1 = rand.randint(0, len(ciudades) - 1) # Posicion de intercambio
         r2 = rand.randint(0, len(ciudades) - 1) # Posicion de intercambio

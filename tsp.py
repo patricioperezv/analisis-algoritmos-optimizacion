@@ -9,26 +9,28 @@ from solucion import Solucion
 import ciudad
 
 Ciudad = ciudad.Ciudad # Cuec
-rand = Random(90)
+rand = Random(10)
 
-cant_ciudades = 100
+# Traemos las 37 comunas de stgo al baile
 ciudades = ciudad.from_tsplib('stgo01.tsp')
 
 # Algoritmo estocastico
 n_estocastico = 10000
 casos_vecinas = 20000
 
-for i in range(cant_ciudades):
-    ciudad = Ciudad(id_ = i, x = rand.randint(0, 1000), y = rand.randint(0, 1000))
-    ciudades.append(ciudad)
+# for i in range(cant_ciudades):
+#     ciudad = Ciudad(id_ = i, x = rand.randint(0, 1000), y = rand.randint(0, 1000))
+#     ciudades.append(ciudad)
 
 mejor_solucion = Solucion(0, ciudades) # Solucion inicial, ciudades tal cual
+
+print 'TSP comunas de Santiago de Chile'
 
 # Metodo estocastico
 print '-' * 50
 print 'Metodo estocastico'
 
-for i in range(1, n_estocastico + 1):
+for i in range(n_estocastico):
     ciudades_al_azar = ciudades[:] # Una copia completa sin referencias, igual deberia dar lo mismo, si siempre la desordeno ...
     rand.shuffle(ciudades_al_azar)
     
@@ -37,7 +39,7 @@ for i in range(1, n_estocastico + 1):
     
     if sol.fitness() < mejor_solucion.fitness():
         mejor_solucion = sol
-        print 'MS: {0}'.format(sol)
+#         print 'MS: {0}'.format(sol)
     else:
         pass
 #         print 'PS: {0}'.format(sol)
@@ -47,7 +49,7 @@ print 'La mejor solucion (Por metodo estocastico) fue: {0}'.format(mejor_solucio
 print '-' * 50
 print 'Metodo gradiente descendente'
 
-for i in range(n_estocastico + 1, casos_vecinas):
+for i in range(casos_vecinas):
     sol = mejor_solucion.getVecina(i)
   
     if sol.fitness() < mejor_solucion.fitness():
