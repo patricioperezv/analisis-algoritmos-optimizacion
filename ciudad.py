@@ -20,8 +20,8 @@ def from_tsplib(fichero):
 class Ciudad:
     def __init__(self, id_, x, y):
         self.id = id_
-        self.x = x
-        self.y = y
+        self.x = float(x)
+        self.y = float(y)
     
     def __str__(self):
         return "Ciudad(id = %s, x = %s, y = %s)" % (self.id, self.x, self.y)

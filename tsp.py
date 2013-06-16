@@ -5,13 +5,14 @@ Created on 14/06/2013
 '''
 
 from random import Random
-from ciudad import Ciudad
 from solucion import Solucion
+import ciudad
 
+Ciudad = ciudad.Ciudad # Cuec
 rand = Random(90)
 
 cant_ciudades = 100
-ciudades = []
+ciudades = ciudad.from_tsplib('stgo01.tsp')
 
 # Algoritmo estocastico
 n_estocastico = 10000
