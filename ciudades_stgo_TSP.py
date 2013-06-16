@@ -12,13 +12,12 @@ from geopy import geocoders
 # Headers de TSPLIB
 tsp = '''NAME: stgo01
 TYPE: TSP
-COMMENT: 37 locations in Santiago (Groetschel)
+COMMENT: 37 locations in Santiago (Pperez)
 DIMENSION: 37
 EDGE_WEIGHT_TYPE: EUC_2D
 NODE_COORD_SECTION
 {nodos}
-EOF
-'''
+EOF'''
 
 # Codigo pais
 country = 'CL'

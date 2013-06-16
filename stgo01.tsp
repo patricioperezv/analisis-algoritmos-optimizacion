@@ -1,6 +1,6 @@
 NAME: stgo01
 TYPE: TSP
-COMMENT: 37 locations in Santiago (Groetschel)
+COMMENT: 37 locations in Santiago (Pperez)
 DIMENSION: 37
 EDGE_WEIGHT_TYPE: EUC_2D
 NODE_COORD_SECTION
@@ -42,4 +42,3 @@ NODE_COORD_SECTION
 36 -33.6333333 -70.55
 37 -33.643169 -70.345207
 EOF
-
