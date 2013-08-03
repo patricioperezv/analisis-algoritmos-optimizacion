@@ -4,38 +4,42 @@ Created on 14/06/2013
 @author: pperez
 '''
 
-from random import Random
-from solucion import Solucion
+import random
 import ciudad
+from solucion import Solucion, rango_id
 
-Ciudad = ciudad.Ciudad # Cuec
-rand = Random(10)
+# Cuec
+Ciudad = ciudad.Ciudad
+# Generador de numeros aleatorios
+rand = random.Random(10)
 
 # Traemos las 37 comunas de stgo al baile
 ciudades = ciudad.from_tsplib('stgo01.tsp')
 
 # Algoritmo estocastico
-n_estocastico = 10000
-casos_vecinas = 20000
+casos_estocastico = 10000
 
-# for i in range(cant_ciudades):
-#     ciudad = Ciudad(id_ = i, x = rand.randint(0, 1000), y = rand.randint(0, 1000))
-#     ciudades.append(ciudad)
+# Algoritmo gradiente decendente
+casos_gradiente = 20000
 
-mejor_solucion = Solucion(0, ciudades) # Solucion inicial, ciudades tal cual
+# Identificador de soluciones
+id_sol = 0
+
+mejor_solucion = Solucion(id_sol, ciudades) # Solucion inicial, ciudades tal cual
 
 print 'TSP comunas de Santiago de Chile'
 
 # Metodo estocastico
+print
 print '-' * 50
 print 'Metodo estocastico'
 
-for i in range(n_estocastico):
+for id_sol in rango_id(id_sol, casos_estocastico):
     ciudades_al_azar = ciudades[:] # Una copia completa sin referencias, igual deberia dar lo mismo, si siempre la desordeno ...
     rand.shuffle(ciudades_al_azar)
     
     # Genero una nueva solucion, esta vez con las ciudades desordenadas
-    sol = Solucion(i, ciudades_al_azar)
+    sol = Solucion(id_sol, ciudades_al_azar)
     
     if sol.fitness() < mejor_solucion.fitness():
         mejor_solucion = sol
@@ -44,13 +48,16 @@ for i in range(n_estocastico):
         pass
 #         print 'PS: {0}'.format(sol)
 
+print
 print 'La mejor solucion (Por metodo estocastico) fue: {0}'.format(mejor_solucion)
 
+print
 print '-' * 50
 print 'Metodo gradiente descendente'
+print
 
-for i in range(casos_vecinas):
-    sol = mejor_solucion.getVecina(i)
+for id_sol in rango_id(id_sol, casos_gradiente):
+    sol = mejor_solucion.getVecina(id_sol)
   
     if sol.fitness() < mejor_solucion.fitness():
         mejor_solucion = sol

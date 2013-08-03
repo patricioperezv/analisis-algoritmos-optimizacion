@@ -4,9 +4,11 @@ Created on 14/06/2013
 @author: pperez
 '''
 
-from random import Random
+import random
+rand = random.Random(10)
 
-rand = Random(111)
+def rango_id(id_sol, casos):
+    return range(id_sol + 1, id_sol + casos + 1)
 
 class Solucion:
     def __init__(self, id_, ciudades):
