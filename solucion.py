@@ -4,17 +4,15 @@ Created on 14/06/2013
 @author: pperez
 '''
 
-import random
-rand = random.Random(10)
-
 def rango_id(id_sol, casos):
     return range(id_sol + 1, id_sol + casos + 1)
 
 class Solucion:
-    def __init__(self, id_, ciudades):
+    def __init__(self, id_, ciudades, rng):
         self.ciudades = []
         self.id = id_
         self.ciudades.extend(ciudades)
+        self.rng = rng # Random number generator
     
     def __str__(self):
         return 'Solucion(id = {id}, d = {d} km)'.format(id = self.id, d = self.fitness())
@@ -28,6 +26,7 @@ class Solucion:
         return suma
     
     def getVecina(self, id_): # Genera una solucion 'vecina', es similar a la solucion original (Intercambia dos ciudades)
+        rand = self.rng
         ciudades = self.ciudades[:]
         r1 = rand.randint(0, len(ciudades) - 1) # Posicion de intercambio
         r2 = rand.randint(0, len(ciudades) - 1) # Posicion de intercambio
@@ -35,4 +34,4 @@ class Solucion:
         ciudades[r1] = ciudades[r2]
         ciudades[r2] = temp
         
-        return Solucion(id_, ciudades)
+        return Solucion(id_, ciudades, rand)
