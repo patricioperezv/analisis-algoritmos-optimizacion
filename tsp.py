@@ -1,3 +1,6 @@
+#!/usr/bin/env pypy
+# -*- coding: utf-8 -*- 
+
 '''
 Created on 14/06/2013
 
