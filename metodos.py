@@ -10,11 +10,11 @@ from solucion import Solucion
 def rango_id(id_sol, casos):
     return range(id_sol + 1, id_sol + casos + 1)
 
-def header(nombre):
+def header(nombre, n, s0):
     print
     print
     print '.-.' * 50
-    print 'Metodo {0}'.format(nombre)
+    print 'Metodo {0} ({1} soluciones, s0: {2})'.format(nombre, n, s0)
     print '.-.' * 50
     print
 
@@ -22,7 +22,7 @@ def estocastico(n, s0, rand):
     # n: cantidad de soluciones a generar por estocastico
     # s0: solucion inicial
     
-    header(estocastico.__name__)
+    header(estocastico.__name__, n, s0)
     
     mejor = s0
     
@@ -43,7 +43,7 @@ def gradiente_decendente(n, s0, rand):
     # n: cantidad de soluciones a generar por gradiente
     # s0: solucion inicial
     
-    header(gradiente_decendente.__name__)
+    header(gradiente_decendente.__name__, n, s0)
     
     mejor = s0
     
@@ -59,7 +59,7 @@ def recocido_simulado(n, s0, T, decenso_T, rand):
     # n: cantidad de soluciones a generar por SA
     # s0: solucion inicial
     
-    header(recocido_simulado.__name__)
+    header(recocido_simulado.__name__, n, s0)
     
     mejor = s0
     sol = mejor

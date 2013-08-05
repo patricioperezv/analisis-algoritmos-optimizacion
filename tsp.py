@@ -40,12 +40,12 @@ print 'TSP comunas de Santiago de Chile'
 
 # Metodo estocastico
 mejor_solucion = metodos.estocastico(casos_estocastico, mejor_solucion, rand)
-print 'La mejor solucion (Por metodo estocastico) fue: {0} km'.format(mejor_solucion)
+print 'La mejor solucion (Por metodo estocastico) fue: {0}'.format(mejor_solucion)
 
 # Metodo gradiente decendente
 mejor_solucion = metodos.gradiente_decendente(casos_gradiente, mejor_solucion, rand)
-print 'La mejor solucion (Por metodo de gradiente decendente) fue: {0} km'.format(mejor_solucion)
+print 'La mejor solucion (Por metodo de gradiente decendente) fue: {0}'.format(mejor_solucion)
 
 # Metodo de recocido simulado
 mejor_solucion = metodos.recocido_simulado(casos_sa, mejor_solucion, T, disminucion_SA, rand)
-print 'La mejor solucion (Por metodo de recocido simulado) fue: {0} km'.format(mejor_solucion)
+print 'La mejor solucion (Por metodo de recocido simulado) fue: {0}'.format(mejor_solucion)
