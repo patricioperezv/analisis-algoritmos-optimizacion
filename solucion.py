@@ -4,9 +4,6 @@ Created on 14/06/2013
 @author: pperez
 '''
 
-def rango_id(id_sol, casos):
-    return range(id_sol + 1, id_sol + casos + 1)
-
 class Solucion:
     def __init__(self, id_, ciudades, rng):
         self.ciudades = []
@@ -15,7 +12,7 @@ class Solucion:
         self.rng = rng # Random number generator
     
     def __str__(self):
-        return 'Solucion(id = {id}, d = {d} km)'.format(id = self.id, d = self.fitness())
+        return 'Solucion(id = {id}, d = {d:.2f} km)'.format(id = self.id, d = self.fitness())
     
     def fitness(self):
         suma = 0
