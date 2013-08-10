@@ -25,4 +25,4 @@ class Producto(object):
         return self.__repr__()
     
     def __repr__(self):
-        return 'Producto(nombre = {0}, peso = {1}, beneficio = {2})'.format(self.id, self.peso, self.beneficio)
+        return 'Producto(id = {0}, peso = {1}, beneficio = {2})'.format(self.id, self.peso, self.beneficio)
