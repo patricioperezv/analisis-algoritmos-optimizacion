@@ -14,52 +14,65 @@ class Mochila(object):
         # rnd: Generador aleatorio de numeros (ex: random.random(100))
         
         self.id = id_
-        self.__productos = productos
+        self.productos = productos
         self.capacidad = capacidad
-        self.__rand = rnd
-        self.__info = [False] * len(self.__productos) # Por defecto no llevamos ningun producto en la mochila!
+        self.rand = rnd
+        self.info = [False] * len(self.productos) # Por defecto no llevamos ningun producto en la mochila!
     
     def __repr__(self):
         return 'Mochila(id = {0}, adn = {1}, peso = {2}, beneficio = {3})'.format(self.id, self.info, self.peso, self.beneficio)
     
     def __str__(self):
         return self.__repr__()
-    
-    # Setter para info
-    def __setInfo(self, info):
-        self.__info = info
-    
-    # Getter para info
-    def __getInfo(self):
-        return self.__info
-    
     # Getter para peso
     def __getPeso(self):
-        return sum((producto.peso for producto in self.__productos if self.__info[producto.id])) # Sumamos si efectivamente esta en la mochila
+        return sum((producto.peso for producto in self.productos if self.info[producto.id])) # Sumamos si efectivamente esta en la mochila
     
     # Getter para beneficio
     def __getBeneficio(self):
-        return sum((producto.beneficio for producto in self.__productos if self.__info[producto.id])) # Sumamos si efectivamente esta en la mochila
-    
-    # Propertys
-    info = property(fset = __setInfo, fget = __getInfo)
-    peso = property(fget = __getPeso)
-    beneficio = property(fget = __getBeneficio)
+        return sum((producto.beneficio for producto in self.productos if self.info[producto.id])) # Sumamos si efectivamente esta en la mochila
     
     # Genera solucion aleatoria
     def aleatorizar(self):
-        productos = list(self.__productos) # Copio la lista de productos, es desordenable por random.shuffle :)
-        self.__rand.shuffle(productos)
+        productos = list(self.productos) # Copio la lista de productos, es desordenable por random.shuffle :)
+        self.rand.shuffle(productos)
         
         while productos:
             prod = productos.pop() # Quito el ultimo item, tecnicamente estoy quitando itemes al azar
             
             if prod.peso <= (self.capacidad - self.peso):
                 # Cabe, lo agrego a la mochila
-                self.__info[prod.id] = True
+                self.info[prod.id] = True
     
     # Repara la solucion si es invalida
     def reparar(self):
         while self.peso > self.capacidad: # Si nos pasamos de peso ...
-            idx = self.__rand.randrange(0, len(self.__productos))
-            self.__info[idx] = False
+            idx = self.rand.randrange(0, len(self.productos))
+            self.info[idx] = False
+    
+    
+    # Propertys
+    peso = property(fget = __getPeso)
+    beneficio = property(fget = __getBeneficio)
+
+# Realiza una 'cruza' de mochilas
+def cruza(mochila1, mochila2):
+    # Vemos en que posicion cortamos las mochilas, permutamos las mitades y voila! tenemos dos soluciones hijas
+    corte = mochila1.rand.randrange(0, len(mochila1.info))
+    
+    productos = mochila1.productos
+    capacidad = mochila1.capacidad
+    
+    # Construyo las hijas
+    hija1 = Mochila(mochila1.id + 1, productos, capacidad, mochila2.rand)
+    hija2 = Mochila(mochila2.id + 1, productos, capacidad, mochila1.rand)
+    
+    # Ahora cruzo los adn
+    hija1.info = mochila1.info[:corte] + mochila2.info[corte:]
+    hija2.info = mochila2.info[:corte] + mochila1.info[corte:]
+    
+    # Ahora las reparo ...
+    hija1.reparar()
+    hija2.reparar() 
+    
+    return hija1, hija2
