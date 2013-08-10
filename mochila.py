@@ -80,7 +80,7 @@ def cruza(mochila1, mochila2):
 def mutar(mochila):
     adn_mutado = mochila.info[:]
     
-    hebra = mochila.rand.randrange(0, len(mochila.info)) # Hebra a mutar
+    hebra = mochila.rand.randrange(0, len(mochila.info)) # alelo a mutar
     adn_mutado[hebra] = not adn_mutado[hebra] # Si esta activo lo desactiva, si esta inactivo, lo activa
     
     mut = Mochila(mochila.id, mochila.productos, mochila.capacidad, mochila.rand)

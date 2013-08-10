@@ -4,20 +4,30 @@ Created on 09/08/2013
 
 @author: pperez
 '''
-
-from mochila import Mochila
+import mochila
+Mochila = mochila.Mochila
 
 class Poblacion(object):
     # Iniciamos la poblacion aleatoriamente
-    def __init__(self, productos, rnd, capacidad, n = 50):
+    def __init__(self, productos, rnd, capacidad, Pc = 0.8, Pm = 0.15, n = 50):
+        # productos: tupla de productos
+        # rnd: generador de pseudo-azar
+        # capacidad: capacidad de la mochila
+        # Pc: probabilidad de cruza
+        # Pm: probabilidad de mutacion
+        # n: tamaño de la poblacion
+        
         self.container = []
         self.rand = rnd
+        self.Pc = Pc
+        self.Pm = Pm
         
         for i in range(n):
             m = Mochila(i, productos, capacidad, rnd)
             m.aleatorizar()
             self.container.append(m)
-        self.container.sort(key = lambda mochila: mochila.beneficio, reverse = True)
+        self.container.sort(key = lambda mochila: mochila.beneficio, reverse = True) # Asi deberian salir mas rapidito las mejores soluciones
+        # Tambien sirve para irme piteando las peores soluciones
     
     # Esto es para calculos de la ruleta
     def totalBeneficio(self):
@@ -25,12 +35,35 @@ class Poblacion(object):
     
     # La famosa ruleta ...
     def ruleta(self):
-        total = self.totalBeneficio()
+        total = float(self.totalBeneficio())
         dado = self.rand.random()
         
         suma = 0
-        for mochila in self.container:
-            suma += mochila.beneficio / total
+        for m in self.container:
+            suma += m.beneficio / total
             if suma >= dado: # Llegamos al wilson, the chosen one
                 break
-        return mochila # Retornamos la mochila elegida al azar
+        return m # Retornamos la mochila elegida al azar
+    
+    # Avanza una etapa de evolucion
+    def newGeneration(self):
+        coqueta1 = self.ruleta()
+        coqueta2 = self.ruleta()
+        
+        nos_cruzamos = self.rand.random()
+        
+        if nos_cruzamos >= self.Pc: # Se cruzan 1313
+            h1, h2 = mochila.cruza(coqueta1, coqueta2)
+            del self.container[-2:] # Nos piteamos a los dos wilsons mas wilsons de la poblacion
+            muta = self.rand.random()
+            if muta >= self.Pm: # Mutamos a la hija1
+                mochila.mutar(h1)
+            muta = self.rand.random()
+            if muta >= self.Pm: # Mutamos a la hija2
+                mochila.mutar(h2)
+            self.container.extend([h1, h2]) # Y agregamos a los hijos recien creados
+            self.container.sort(key = lambda mochila: mochila.beneficio, reverse = True) # De nuevo, sorting ...
+    
+    # Retornamos al mejor wilson de la poblacion
+    def mejorWilson(self):
+        return self.container[0]
