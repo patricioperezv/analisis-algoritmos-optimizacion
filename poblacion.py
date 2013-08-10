@@ -9,7 +9,7 @@ Mochila = mochila.Mochila
 
 class Poblacion(object):
     # Iniciamos la poblacion aleatoriamente
-    def __init__(self, productos, rnd, capacidad, Pc = 0.8, Pm = 0.15, n = 50):
+    def __init__(self, productos, rnd, capacidad, Pc = 0.9, Pm = 0.25, n = 50):
         # productos: tupla de productos
         # rnd: generador de pseudo-azar
         # capacidad: capacidad de la mochila
@@ -52,14 +52,14 @@ class Poblacion(object):
         
         nos_cruzamos = self.rand.random()
         
-        if nos_cruzamos >= self.Pc: # Se cruzan 1313
+        if nos_cruzamos <= self.Pc: # Se cruzan 1313
             h1, h2 = mochila.cruza(coqueta1, coqueta2)
             del self.container[-2:] # Nos piteamos a los dos wilsons mas wilsons de la poblacion
             muta = self.rand.random()
-            if muta >= self.Pm: # Mutamos a la hija1
+            if muta <= self.Pm: # Mutamos a la hija1
                 mochila.mutar(h1)
             muta = self.rand.random()
-            if muta >= self.Pm: # Mutamos a la hija2
+            if muta <= self.Pm: # Mutamos a la hija2
                 mochila.mutar(h2)
             self.container.extend([h1, h2]) # Y agregamos a los hijos recien creados
             self.container.sort(key = lambda mochila: mochila.beneficio, reverse = True) # De nuevo, sorting ...
