@@ -60,4 +60,6 @@ class Mochila(object):
     
     # Repara la solucion si es invalida
     def reparar(self):
-        pass
+        while self.peso > self.capacidad: # Si nos pasamos de peso ...
+            idx = self.__rand.randrange(0, len(self.__productos))
+            self.__info[idx] = False
