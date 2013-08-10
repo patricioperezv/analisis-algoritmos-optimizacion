@@ -14,27 +14,23 @@ from poblacion import Poblacion
 from mochila import Mochila
 
 if __name__ == '__main__':
-    cant_productos = 20
-    capacidad = 4200
-    generaciones = 100
-    
-    # Para este caso la mejor mochila es: Mochila(adn = (True, True, False, False, True, True, False, True, True, True), peso = 1744, beneficio = 1921)
-    # Obtenido por fuerza bruta
-    
+    cant_productos = 40
+    capacidad = 8400
+    generaciones = 500    
     rnd = random.Random(100)
     
-    print "Productos:"
-    print "-" * 50
-    print
+    
     productos = tuple(Producto(i, rnd) for i in range(cant_productos)) # Lista de productos generados aleatoriamente
 #     for producto in productos: print producto
     
     pob = Poblacion(productos, rnd, capacidad)
+    print "Mejor mochila poblacion inicial:"
     print pob.mejorWilson()
     
     for _ in range(generaciones):
         pob.newGeneration()
-#         print pob.mejorWilson()
+    
+    print "Mejor mochila despues de {0} años".format(generaciones)
     print pob.mejorWilson()
     
 #     # Fuerza bruta!

@@ -20,7 +20,7 @@ class Mochila(object):
         self.info = [False] * len(self.productos) # Por defecto no llevamos ningun producto en la mochila!
     
     def __repr__(self):
-        return 'Mochila(adn = {1}, peso = {2}, beneficio = {3})'.format(self.id, self.info, self.peso, self.beneficio)
+        return 'Mochila(peso = {2}, beneficio = {3})'.format(self.id, self.info, self.peso, self.beneficio)
     
     def __str__(self):
         return self.__repr__()
