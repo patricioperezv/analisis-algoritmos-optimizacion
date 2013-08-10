@@ -20,7 +20,7 @@ class Mochila(object):
         self.info = [False] * len(self.productos) # Por defecto no llevamos ningun producto en la mochila!
     
     def __repr__(self):
-        return 'Mochila(id = {0}, adn = {1}, peso = {2}, beneficio = {3})'.format(self.id, self.info, self.peso, self.beneficio)
+        return 'Mochila(adn = {1}, peso = {2}, beneficio = {3})'.format(self.id, self.info, self.peso, self.beneficio)
     
     def __str__(self):
         return self.__repr__()
@@ -50,7 +50,6 @@ class Mochila(object):
             idx = self.rand.randrange(0, len(self.productos))
             self.info[idx] = False
     
-    
     # Propertys
     peso = property(fget = __getPeso)
     beneficio = property(fget = __getBeneficio)
@@ -76,3 +75,16 @@ def cruza(mochila1, mochila2):
     hija2.reparar() 
     
     return hija1, hija2
+
+# Muta una solucion
+def mutar(mochila):
+    adn_mutado = mochila.info[:]
+    
+    hebra = mochila.rand.randrange(0, len(mochila.info)) # Hebra a mutar
+    adn_mutado[hebra] = not adn_mutado[hebra] # Si esta activo lo desactiva, si esta inactivo, lo activa
+    
+    mut = Mochila(mochila.id, mochila.productos, mochila.capacidad, mochila.rand)
+    mut.info = adn_mutado
+    mut.reparar()
+    
+    return mut
