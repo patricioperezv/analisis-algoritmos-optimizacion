@@ -67,7 +67,7 @@ if __name__ == '__main__':
     mean = 0.0
     variance = 0.0
 
-    for i in range(100):
+    for i in range(SAMPLE_SIZE):
         percolacion = PercolationSimulation(N)
         estimado = percolacion.umbral()
         mean += estimado
